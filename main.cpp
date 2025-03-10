@@ -46,7 +46,7 @@ void loadFile(const string &filename, int &tamVet, vector<int> &chave)
     file.close(); // fecha o arquivo
 }
 
-bool compara(const vector<int> &vet, const vector<vector<int>> &res)
+bool compare(const vector<int> &vet, const vector<vector<int>> &res)
 {
     for (const auto &v : res)
     {
