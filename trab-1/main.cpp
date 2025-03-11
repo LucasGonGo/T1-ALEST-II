@@ -46,7 +46,7 @@ void loadFile(const string &filename, int &tamVet, vector<int> &chave)
     file.close(); // fecha o arquivo
 }
 
-bool compare(const vector<int> &vet, const vector<vector<int>> &res)
+bool compare(const vector<int> &vet, const vector<vector<int>> &res) //ridiculo
 {
     for (const auto &v : res)
     {
@@ -80,7 +80,7 @@ int makeItDance(const int tamVet, const vector<int> chave)
         {
             tmp[i] = vet[chave[i]];
 
-            if (!compara(tmp, res))
+            if (!compare(tmp, res))
             {
                 res.push_back(tmp);
             }
@@ -97,7 +97,8 @@ int main()
     int tamVet;
     vector<int> chave;
 
-    loadFile("caso71.txt", tamVet, chave);
-    cout << makeItDance(tamVet, chave);
-    
+    for(int i = 7; i<20; i++){
+    loadFile("caso"+to_string(i)+"1.txt", tamVet, chave);
+    cout << makeItDance(tamVet, chave)<<endl;
+    }
 }
