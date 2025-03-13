@@ -136,8 +136,8 @@ int main()
     int tamVet;
     vector<int> chave;
 
-    loadFile("caso7.txt", tamVet, chave);
-    cout <<  makeItDance(tamVet, chave)<<endl;
+    //loadFile("caso7.txt", tamVet, chave);
+    //cout <<  makeItDance(tamVet, chave)<<endl;
     for(int i = 7; i<20; i++)
     {
         chave.clear();
