@@ -56,9 +56,9 @@ bool compare(const vector<int> &vet, const vector<vector<int>> &res) //ridiculo
     return false;
 }
 
-int makeItDance(const int tamVet, const vector<int> chave)
+int makeItDance(const int tamVet, const vector<int> chave) //quebrou, arruma
 {
-
+    int count = 0;
     vector<vector<int>> res(tamVet);
     vector<int> vet(tamVet);
 
@@ -88,8 +88,9 @@ int makeItDance(const int tamVet, const vector<int> chave)
                 deuCerto = true;
         }
         vet = tmp;
+        count++;
     }
-    return res.size();
+    return count;
 }
 
 int main()
