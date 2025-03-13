@@ -4,6 +4,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <unordered_set>
+
 using namespace std;
 
 void loadFile(const string &filename, int &tamVet, vector<int> &chave)
@@ -46,7 +48,7 @@ void loadFile(const string &filename, int &tamVet, vector<int> &chave)
     file.close(); // fecha o arquivo
 }
 
-bool compare(const vector<int> &vet, const vector<vector<int>> &res) //ridiculo
+/*bool compare(const vector<int> &vet, const vector<vector<int>> &res) //ridiculo //v1.0
 {
     for (const auto &v : res)
     {
@@ -54,43 +56,79 @@ bool compare(const vector<int> &vet, const vector<vector<int>> &res) //ridiculo
             return true; // se achou um igual retorna verdadeiro
     }
     return false;
+}*/
+
+// bool compare(const vector<int> &vet, const vector<vector<int>> &res) //v1.5
+// {
+//     for (const auto &v : res)
+//     {
+//         if(v[0] == vet[0])
+//         {
+//             if (v == vet)
+//             {
+//             return true;        // se achou um igual retorna verdadeiro
+//             }
+//         }
+//     }                    
+//     return false;
+// }
+
+//v2.0, usando unordered_set no lugar de vector<vector<int>>.
+
+string vectorToString(const vector<int> &vet)
+{
+    string s;
+    for (int num : vet)
+    {
+        s += to_string(num) + ",";
+    }
+    return s;
 }
 
-int makeItDance(const int tamVet, const vector<int> chave) //quebrou, arruma
+int makeItDance(const int tamVet, const vector<int> &chave) //quebrou, arruma
 {
-    int count = 0;
-    vector<vector<int>> res(tamVet);
     vector<int> vet(tamVet);
-
-    for (int i = 0; i < tamVet; i++)
-    {
+    for (int i = 0; i < tamVet; i++)                //necessario.
+    {                                               
         vet[i] = i; 
     }
-    res.push_back(vet); 
 
-    vet = chave;        
-    res.push_back(vet); 
-    bool deuCerto = false;
+    //vector<vector<int>> res;                
+    //res.push_back(vet);                             //necessario.
+   
+    unordered_set<string> estadosVistos;
+    estadosVistos.insert(vectorToString(vet));
 
-    while (!deuCerto)
+    long rodadas = 0;                                //não crtz
+
+    while (true)                                    //necessario.
     {
-            vector<int> tmp(tamVet);
+        vector<int> tmp(tamVet);                    
 
-        for (int i = 0; i < tamVet - 1; i++)
+        for (int i = 0; i < tamVet; i++)            //necessario.
         {
-            tmp[i] = vet[chave[i]];
-
-            if (!compare(tmp, res))
-            {
-                res.push_back(tmp);
-            }
-            else
-                deuCerto = true;
+            tmp[i] = vet[chave[i]];                 //necessario.
         }
-        vet = tmp;
-        count++;
+
+        rodadas++;                                  //...
+
+        string tmpStr = vectorToString(tmp);
+        if (estadosVistos.count(tmpStr))
+        {
+            return rodadas;
+        }
+
+        estadosVistos.insert(tmpStr);
+        vet = move(tmp);
+
+        // if(compare(tmp, res))                       //necessario.
+        // {
+        //     return rodadas;
+        // }
+
+        //res.push_back(tmp);                         //necessario.
+        //vet = tmp;                                  //necessario.
     }
-    return count;
 }
 
 int main()
@@ -104,4 +142,13 @@ int main()
     //}
     loadFile("caso7.txt", tamVet, chave);
     cout <<  makeItDance(tamVet, chave)<<endl;
+    for(int i = 7; i<8; i++)
+    {
+        chave.clear();
+        loadFile("caso"+to_string(i)+"1.txt", tamVet, chave);
+        cout <<"caso "+to_string(i)+"1: "<< makeItDance(tamVet, chave)<<endl;
+    }
+
+    /*loadFile("caso7.txt", tamVet, chave);
+    cout << makeItDance(tamVet, chave) << endl;*/
 }
