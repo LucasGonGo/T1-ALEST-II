@@ -74,8 +74,9 @@ void loadFile(const string &filename, int &tamVet, vector<int> &chave)
 // }
 
 //v2.0, usando unordered_set no lugar de vector<vector<int>>.
+//v3.0, so considera o primeiro caso
 
-string vectorToString(const vector<int> &vet)
+/*string vectorToString(const vector<int> &vet)
 {
     string s;
     for (int num : vet)
@@ -83,7 +84,7 @@ string vectorToString(const vector<int> &vet)
         s += to_string(num) + ",";
     }
     return s;
-}
+}*/
 
 int makeItDance(const int tamVet, const vector<int> &chave) //quebrou, arruma
 {
@@ -93,11 +94,13 @@ int makeItDance(const int tamVet, const vector<int> &chave) //quebrou, arruma
         vet[i] = i; 
     }
 
+    vector<int> aux(tamVet);
+    aux = vet;
     //vector<vector<int>> res;                
     //res.push_back(vet);                             //necessario.
    
-    unordered_set<string> estadosVistos;
-    estadosVistos.insert(vectorToString(vet));
+    //unordered_set<string> estadosVistos;
+    //estadosVistos.insert(vectorToString(vet));
 
     long rodadas = 0;                                //não crtz
 
@@ -111,16 +114,16 @@ int makeItDance(const int tamVet, const vector<int> &chave) //quebrou, arruma
         }
 
         rodadas++;                                  //...
+        
+        //string tmpStr = vectorToString(tmp);
+        //if (estadosVistos.count(tmpStr))
+        //{
+        //    return rodadas;
+        //}
 
-        string tmpStr = vectorToString(tmp);
-        if (estadosVistos.count(tmpStr))
-        {
-            return rodadas;
-        }
-
-        estadosVistos.insert(tmpStr);
+        //estadosVistos.insert(tmpStr);
         vet = move(tmp);
-
+        if(tmp == aux) return rodadas;
         // if(compare(tmp, res))                       //necessario.
         // {
         //     return rodadas;
